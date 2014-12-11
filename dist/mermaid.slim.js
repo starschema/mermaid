@@ -12980,7 +12980,7 @@ module.exports={
     "url": "https://github.com/knsv/mermaid"
   },
   "author": "",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "dependencies": {
     "he": "^0.5.0",
     "dagre-d3": "~0.3.2"
@@ -12998,6 +12998,7 @@ module.exports={
     "gulp-istanbul": "^0.4.0",
     "gulp-jasmine": "~1.0.1",
     "gulp-jison": "~1.0.0",
+    "gulp-jshint": "^1.9.0",
     "gulp-less": "^1.3.6",
     "gulp-rename": "~1.2.0",
     "gulp-shell": "^0.2.10",
@@ -13006,6 +13007,7 @@ module.exports={
     "he": "^0.5.0",
     "jasmine": "~2.0.1",
     "jison": "~0.4.15",
+    "jshint-stylish": "^1.0.0",
     "karma": "~0.12.20",
     "karma-chrome-launcher": "~0.1.5",
     "karma-jasmine": "~0.2.1",
@@ -13155,10 +13157,10 @@ exports.addEdges = function (edges, g) {
         else {
 
             if(typeof edge.style === 'undefined'){
-                g.setEdge(edge.start, edge.end,{labelType: "html",style: "stroke: #333; stroke-width: 1.5px;fill:none", labelpos:'c', label: '<span style="background:#e8e8e8">'+edge.text+'</span>', arrowheadStyle: "fill: #333", arrowhead: aHead},cnt);
+                g.setEdge(edge.start, edge.end,{labelType: "html",style: "stroke: #333; stroke-width: 1.5px;fill:none", labelpos:'c', label: '<span class="mermaid-label">'+edge.text+'</span>', arrowheadStyle: "fill: #333", arrowhead: aHead},cnt);
             }else{
                 g.setEdge(edge.start, edge.end, {
-                    labelType: "html",style: style, arrowheadStyle: "fill: #333", label: edge.text, arrowhead: aHead
+                    labelType: "html",style: style, arrowheadStyle: "fill: #333", label: '<span class="mermaid-label">'+edge.text+'</span>', arrowhead: aHead
                 },cnt);
             }
         }
@@ -13397,6 +13399,7 @@ global.mermaid = {
         return flow.parser;
     }
 };
+
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../package.json":102,"./graphDb":104,"./parser/dot":105,"./parser/flow":106,"./sequenceRenderer":109,"./utils":110,"dagre-d3":1,"he":100}],104:[function(require,module,exports){
 /**
@@ -13456,7 +13459,8 @@ exports.addVertex = function (id, text, type, style) {
 exports.addLink = function (start, end, type, linktext) {
     //console.log('Got edge', start, end);
     var edge = {start: start, end: end, type: undefined, text: ''};
-    var linktext = type.text;
+    linktext = type.text;
+
     if (typeof linktext !== 'undefined') {
         edge.text = linktext;
     }
@@ -13605,7 +13609,6 @@ exports.clear = function () {
 exports.defaultStyle = function () {
     return "fill:#ffa;stroke: #f66; stroke-width: 3px; stroke-dasharray: 5, 5;fill:#ffa;stroke: #666;";
 };
-
 
 },{}],105:[function(require,module,exports){
 (function (process){
@@ -16057,5 +16060,6 @@ module.exports.detectType = function(text){
     }
 
     return "graph";
-}
+};
+
 },{}]},{},[103])
